@@ -28,4 +28,8 @@ public class ProjectService {
         }
         return projectRepository.findByProjectIdentifier(projectIdentifier.toUpperCase());
     }
+
+    public Iterable<Project> findAllProjects() {
+        return projectRepository.findAll();
+    }
 }
