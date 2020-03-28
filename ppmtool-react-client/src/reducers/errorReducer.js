@@ -1,4 +1,5 @@
 import { GET_ERRORS } from "../actions/types";
+//const initialState = { test: "initial testng error e.g." };
 const initialState = {};
 export default function(state = initialState, action) {
   switch (action.type) {
