@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+
+import org.hibernate.type.TrueFalseType;
+
 import java.util.Date;
 
 @Entity
@@ -12,12 +15,13 @@ public class ProjectTask {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(updatable = false)
+    @Column(updatable = false, unique = true)
     private String projectSequence;
     @NotBlank(message = "Please include a project summary")
     private String summary;
     private String acceptanceCriteria;
     private String status;
+    private Integer priority;
     private Date dueDate;
     //ManyToOne with Backlog
     @ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
@@ -124,18 +128,20 @@ public class ProjectTask {
         this.backlog = backlog;
     }
 
-    @Override
-    public String toString() {
-        return "ProjectTask{" +
-                "id=" + id +
-                ", projectSequence='" + projectSequence + '\'' +
-                ", summary='" + summary + '\'' +
-                ", acceptanceCriteria='" + acceptanceCriteria + '\'' +
-                ", status='" + status + '\'' +
-                ", dueDate=" + dueDate +
-                ", projectIdentifier='" + projectIdentifier + '\'' +
-                ", create_At=" + create_At +
-                ", update_At=" + update_At +
-                '}';
-    }
+    public Integer getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Integer priority) {
+		this.priority = priority;
+	}
+
+	@Override
+	public String toString() {
+		return "ProjectTask [id=" + id + ", projectSequence=" + projectSequence + ", summary=" + summary
+				+ ", acceptanceCriteria=" + acceptanceCriteria + ", status=" + status + ", priority=" + priority
+				+ ", dueDate=" + dueDate + ", backlog=" + backlog + ", projectIdentifier=" + projectIdentifier
+				+ ", create_At=" + create_At + ", update_At=" + update_At + "]";
+	}
+
 }
